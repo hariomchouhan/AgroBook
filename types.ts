@@ -1,30 +1,25 @@
-
 // User Types
 export type User = {
-    id: string;
+    $id: string;
     name: string;
     email: string;
   };
   
   // Crop Type Types
   export type CropType = {
-    id: string;
-    name: string;
-    description?: string;
+    $id: string;
+    crop: string;
   };
   
   // Equipment Types
-  export type Equipment = {
-    id: string;
+  export type Equipments = {
+    $id: string;
     name: string;
-    description?: string;
-    unitType: 'biga' | 'trolley';
-    isActive: boolean;
   };
   
   // Entry Types
   export type Entry = {
-    id: string;
+    $id: string;
     userId: string;
     personName: string;
     equipmentId: string;
@@ -37,33 +32,39 @@ export type User = {
     paymentStatus: 'paid' | 'partially_paid' | 'not_paid';
     remainingAmount: number;
     notes?: string;
-    date: string;
     createdAt: string;
     updatedAt: string;
   };
   
   // Payment Types
   export type Payment = {
-    id: string;
+    $id: string;
     entryId: string;
     amount: number;
     paymentDate: string;
     notes?: string;
     createdAt: string;
+    updatedAt: string;
   };
   
   // Form Types
   export type EntryFormData = {
+    userId: string;
     personName: string;
     equipmentId: string;
     cropTypeId: string;
     quantity: number;
     pricePerUnit: number;
-    date: string;
+    totalPrice: number;
+    totalAmountPaid: number;
+    lastPaymentDate?: string;
+    paymentStatus: 'paid' | 'partially_paid' | 'not_paid';
+    remainingAmount: number;
     notes?: string;
   };
   
   export type PaymentFormData = {
+    entryId: string;
     amount: number;
     paymentDate: string;
     notes?: string;

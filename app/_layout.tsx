@@ -11,6 +11,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 // import { DataProvider } from "@/contexts/DataContext";
 import ScreenWrapper from "@/components/ScreenWrapper";
 import { useAuth } from "@/hooks/useAuth";
+import { DataProvider } from "@/contexts/DataContext";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -49,7 +50,7 @@ function RootLayoutNav() {
   return (
     <AuthProvider>
       <AuthGuard>
-        {/* <DataProvider> */}
+        <DataProvider>
           <ScreenWrapper>
             <Stack>
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -62,7 +63,7 @@ function RootLayoutNav() {
               {/* Add more non-tab screen routes here */}
             </Stack>
           </ScreenWrapper>
-        {/* </DataProvider> */}
+        </DataProvider>
       </AuthGuard>
     </AuthProvider>
   );
