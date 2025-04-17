@@ -226,6 +226,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         totalAmountPaid: 0,
         paymentStatus: "not_paid",
         remainingAmount: totalPrice,
+        lastPaymentDate: data.lastPaymentDate,
         notes: data.notes,
       };
 
@@ -260,10 +261,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         databaseId!,
         entriesCollectionId!,
         id,
-        {
-          ...data,
-          updatedAt: new Date().toISOString(),
-        }
+        data
       );
 
       await refreshEntries();
@@ -342,7 +340,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         entryId: entryId,
         amount: data.amount,
         notes: data.notes,
-        createdAt: new Date().toISOString(),
+        paymentDate: data.paymentDate,
       };
 
       // Get the entry
@@ -350,9 +348,6 @@ export const DataProvider = ({ children }: DataProviderProps) => {
 
       // Calculate new totals
       const newTotalAmountPaid = entry.totalAmountPaid + data.amount;
-      if (entry.totalPrice < newTotalAmountPaid)
-        throw new Error("You have overcharged");
-
       const newRemainingAmount = entry.totalPrice - newTotalAmountPaid;
 
       const paymentResponse = await database.createDocument(
@@ -363,9 +358,9 @@ export const DataProvider = ({ children }: DataProviderProps) => {
       );
 
       // Determine new payment status
-      let newPaymentStatus: "paid" | "partially_paid" | "not_paid";
+      let newPaymentStatus: "full_paid" | "partially_paid" | "not_paid";
       if (newRemainingAmount <= 0) {
-        newPaymentStatus = "paid";
+        newPaymentStatus = "full_paid";
       } else if (newTotalAmountPaid > 0) {
         newPaymentStatus = "partially_paid";
       } else {
@@ -375,7 +370,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
       // Update the entry
       await updateEntry(entryId, {
         totalAmountPaid: newTotalAmountPaid,
-        lastPaymentDate: new Date().toISOString(),
+        lastPaymentDate: data.paymentDate,
         remainingAmount: newRemainingAmount,
         paymentStatus: newPaymentStatus,
       });
@@ -416,9 +411,9 @@ export const DataProvider = ({ children }: DataProviderProps) => {
       const remainingAmount = entry.totalPrice - totalAmountPaid;
 
       // Determine new payment status
-      let paymentStatus: "paid" | "partially_paid" | "not_paid";
+      let paymentStatus: "full_paid" | "partially_paid" | "not_paid";
       if (remainingAmount <= 0) {
-        paymentStatus = "paid";
+        paymentStatus = "full_paid";
       } else if (totalAmountPaid > 0) {
         paymentStatus = "partially_paid";
       } else {
@@ -431,7 +426,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         remainingAmount,
         paymentStatus,
         lastPaymentDate:
-          entryPayments.length > 0 ? entryPayments[0].createdAt : undefined,
+          entryPayments.length > 0 ? entryPayments[0].$createdAt : undefined,
       });
 
       await refreshPayments();

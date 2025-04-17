@@ -20,6 +20,8 @@ export type User = {
   // Entry Types
   export type Entry = {
     $id: string;
+    $createdAt: string;
+    $updatedAt: string;
     userId: string;
     personName: string;
     equipmentId: string;
@@ -29,11 +31,9 @@ export type User = {
     totalPrice: number;
     totalAmountPaid: number;
     lastPaymentDate?: string;
-    paymentStatus: 'paid' | 'partially_paid' | 'not_paid';
+    paymentStatus: 'full_paid' | 'partially_paid' | 'not_paid';
     remainingAmount: number;
     notes?: string;
-    createdAt: string;
-    updatedAt: string;
   };
   
   // Payment Types
@@ -43,8 +43,8 @@ export type User = {
     amount: number;
     paymentDate: string;
     notes?: string;
-    createdAt: string;
-    updatedAt: string;
+    $createdAt: string;
+    $updatedAt: string;
   };
   
   // Form Types
@@ -58,7 +58,7 @@ export type User = {
     totalPrice: number;
     totalAmountPaid: number;
     lastPaymentDate?: string;
-    paymentStatus: 'paid' | 'partially_paid' | 'not_paid';
+    paymentStatus: 'full_paid' | 'partially_paid' | 'not_paid';
     remainingAmount: number;
     notes?: string;
   };

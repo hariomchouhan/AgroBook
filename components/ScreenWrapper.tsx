@@ -7,7 +7,7 @@ type Props = {};
 const ScreenWrapper = ({ style, children }: any) => {
   const { height } = Dimensions.get("window");
 
-  let paddingTop = Platform.OS === "ios" ? height * 0.06 : 0;
+  let paddingTop = Platform.OS === "ios" ? height * 0.06 : height * 0.04;
   return (
     <View
       style={[
@@ -19,7 +19,7 @@ const ScreenWrapper = ({ style, children }: any) => {
         style,
       ]}
     >
-        <StatusBar barStyle={'light-content'} backgroundColor={colors.background} />
+        <StatusBar barStyle={'dark-content'} backgroundColor={colors.background} />
       {children}
     </View>
   );

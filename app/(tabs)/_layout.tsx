@@ -3,6 +3,7 @@ import React from 'react';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { colors } from '@/constants/Colors';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function TabLayout() {
 
@@ -18,13 +19,14 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           // tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarIcon: ({ color }) => <Ionicons name="home" size={28} color={color} />,
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="profile"
         options={{
-          title: 'Explore',
-          // tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'Profile',
+          tabBarIcon: ({ color }) => <Ionicons name="person" size={28} color={color} />,
         }}
       />
     </Tabs>

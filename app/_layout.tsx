@@ -52,8 +52,8 @@ function RootLayoutNav() {
       <AuthGuard>
         <DataProvider>
           <ScreenWrapper>
-            <Stack>
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="(tabs)"/>
               <Stack.Screen name="(auth)/login" options={{ title: 'Login' }} />
               <Stack.Screen name="(auth)/signup" options={{ title: 'Sign Up' }} />
               <Stack.Screen name="entries/new" options={{ title: 'New Entry' }} />

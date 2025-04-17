@@ -1,23 +1,18 @@
 import { DataContext } from "@/contexts/DataContext";
-import { Link } from "expo-router";
+import { useRouter } from "expo-router";
 import { useContext } from "react";
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import Header from "@/components/Header";
 
 export default function HomeScreen() {
   const { entries } = useContext(DataContext);
+  const router = useRouter()
   
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>AgroBook</Text>
-        <Link href="/entries/new" asChild>
-          <TouchableOpacity style={styles.addButton}>
-            <Ionicons name="add-circle" size={24} color="#4CAF50" />
-          </TouchableOpacity>
-        </Link>
-      </View>
-
+      <Header title="AgroBook" showAddButton={true} />
+      
       <ScrollView style={styles.content}>
         {entries.length === 0 ? (
           <View style={styles.emptyState}>
@@ -30,7 +25,7 @@ export default function HomeScreen() {
             <TouchableOpacity 
               key={entry.$id} 
               style={styles.entryCard}
-              onPress={() => {/* Add navigation to entry details */}}
+              onPress={() => {router.push(`/entries/${entry.$id}`)}}
             >
               <View style={styles.entryHeader}>
                 <Text style={styles.entryName}>{entry.personName}</Text>
@@ -55,7 +50,7 @@ export default function HomeScreen() {
 
 const getStatusColor = (status: string) => {
   switch (status) {
-    case 'paid':
+    case 'full_paid':
       return '#4CAF50';
     case 'partially_paid':
       return '#FFC107';
@@ -70,23 +65,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5F5F5',
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 16,
-    backgroundColor: '#FFFFFF',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333333',
-  },
-  addButton: {
-    padding: 8,
   },
   content: {
     flex: 1,

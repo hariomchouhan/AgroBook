@@ -12,6 +12,7 @@ import {
 import { DataContext } from "@/contexts/DataContext";
 import { useRouter } from "expo-router";
 import { Equipments, CropType } from "@/types";
+import Header from "@/components/Header";
 
 export default function NewEntryScreen() {
   const router = useRouter();
@@ -114,14 +115,11 @@ export default function NewEntryScreen() {
     </Modal>
   );
 
-//   console.log("formData: ", formData);
-//   console.log("cropData: ", cropTypes[0]); // ropData:  {"$collectionId": "67f643d10024fde07bcd", "$createdAt": "2025-04-09T10:02:46.782+00:00", "$databaseId": "67f60a7f000136555e7c", "$id": "67f645c60018c6bb1706", "$permissions": [], "$updatedAt": "2025-04-09T10:02:46.782+00:00", "crop": "Lahsun"}
-//   console.log("cropData: ", cropTypes[0].$id); // cropData:  undefined
-//   console.log("equipmentData: ", equipments[0]); //equipmentData:  {"$collectionId": "67f6440b003d791a299c", "$createdAt": "2025-04-09T10:09:28.457+00:00", "$databaseId": "67f60a7f000136555e7c", "$id": "67f647580007bc814615", "$permissions": [], "$updatedAt": "2025-04-09T10:09:28.457+00:00", "name": "Trolley"}
-//   console.log("equipmentData: ", equipments[0].$id); // equipmentData:  undefined
-
   return (
     <ScrollView style={styles.container}>
+      {/* Header */}
+      <Header title="New Entry" showAddButton={false} showBackButton={true} />
+
       <View style={styles.form}>
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Person Name *</Text>
