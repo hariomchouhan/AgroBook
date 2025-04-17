@@ -1,27 +1,52 @@
 import { DataContext } from "@/contexts/DataContext";
 import { useRouter } from "expo-router";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Header from "@/components/Header";
+import SegmentedControl from "@react-native-segmented-control/segmented-control";
+
+type PaymentStatus = 'all' | 'full_paid' | 'partially_paid' | 'not_paid';
 
 export default function HomeScreen() {
   const { entries } = useContext(DataContext);
-  const router = useRouter()
+  const router = useRouter();
+  const [selectedFilter, setSelectedFilter] = useState<PaymentStatus>('all');
+  
+  const filteredEntries = entries.filter(entry => {
+    if (selectedFilter === 'all') return true;
+    return entry.paymentStatus === selectedFilter;
+  });
   
   return (
     <View style={styles.container}>
       <Header title="AgroBook" showAddButton={true} />
       
+      <View style={styles.filterContainer}>
+        <SegmentedControl
+          values={['All', 'Full Paid', 'Partially Paid', 'Not Paid']}
+          selectedIndex={['all', 'full_paid', 'partially_paid', 'not_paid'].indexOf(selectedFilter)}
+          onChange={(event: { nativeEvent: { selectedSegmentIndex: number } }) => {
+            const filters: PaymentStatus[] = ['all', 'full_paid', 'partially_paid', 'not_paid'];
+            setSelectedFilter(filters[event.nativeEvent.selectedSegmentIndex]);
+          }}
+          style={styles.segmentedControl}
+        />
+      </View>
+      
       <ScrollView style={styles.content}>
-        {entries.length === 0 ? (
+        {filteredEntries.length === 0 ? (
           <View style={styles.emptyState}>
             <Ionicons name="document-text-outline" size={48} color="#9E9E9E" />
-            <Text style={styles.emptyStateText}>No entries yet</Text>
-            <Text style={styles.emptyStateSubtext}>Add your first entry to get started</Text>
+            <Text style={styles.emptyStateText}>No entries found</Text>
+            <Text style={styles.emptyStateSubtext}>
+              {selectedFilter === 'all' 
+                ? "Add your first entry to get started"
+                : `No ${selectedFilter.replace('_', ' ')} entries found`}
+            </Text>
           </View>
         ) : (
-          entries.map((entry) => (
+          filteredEntries.map((entry) => (
             <TouchableOpacity 
               key={entry.$id} 
               style={styles.entryCard}
@@ -65,6 +90,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5F5F5',
+  },
+  filterContainer: {
+    padding: 16,
+    backgroundColor: '#FFFFFF',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E0E0E0',
+  },
+  segmentedControl: {
+    height: 40,
   },
   content: {
     flex: 1,
