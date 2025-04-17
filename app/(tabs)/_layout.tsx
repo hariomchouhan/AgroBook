@@ -23,6 +23,13 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="fullPaid"
+        options={{
+          title: 'Full Paid',
+          tabBarIcon: ({ color }) => <Ionicons name="checkmark-circle" size={28} color={color} />,
+        }}
+      />
+      <Tabs.Screen
         name="profile"
         options={{
           title: 'Profile',

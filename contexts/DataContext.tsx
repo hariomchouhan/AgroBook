@@ -35,6 +35,11 @@ interface DataContextType {
   // deleteEntry: (id: string) => Promise<void>;
   getEntry: (id: string) => Promise<Entry>;
   refreshEntries: () => Promise<void>;
+  fetchFilteredEntries: (
+    status: 'all' | 'full_paid' | 'partially_paid' | 'not_paid',
+    page: number,
+    limit: number
+  ) => Promise<{ entries: Entry[]; total: number }>;
 
   // Payment functions
   createPayment: (entryId: string, data: PaymentFormData) => Promise<Payment>;
@@ -69,6 +74,9 @@ export const DataContext = createContext<DataContextType>({
     throw new Error("Not implemented");
   },
   refreshEntries: async () => {
+    throw new Error("Not implemented");
+  },
+  fetchFilteredEntries: async () => {
     throw new Error("Not implemented");
   },
 
@@ -459,6 +467,50 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     }
   };
 
+  const fetchFilteredEntries = async (
+    status: 'all' | 'full_paid' | 'partially_paid' | 'not_paid',
+    page: number,
+    limit: number
+  ): Promise<{ entries: Entry[]; total: number }> => {
+    if (!user) throw new Error("User not authenticated");
+
+    setLoading(true);
+    try {
+      const queries = [Query.equal("userId", user.$id)];
+      
+      if (status !== 'all') {
+        queries.push(Query.equal("paymentStatus", status));
+      } else {
+        // Exclude full_paid entries when showing all
+        queries.push(Query.notEqual("paymentStatus", "full_paid"));
+      }
+
+      const offset = (page - 1) * limit;
+
+      const response = await database.listDocuments(
+        databaseId!,
+        entriesCollectionId!,
+        [
+          ...queries,
+          Query.orderDesc("$createdAt"),
+          Query.limit(limit),
+          Query.offset(offset)
+        ]
+      );
+
+      return {
+        entries: response.documents as unknown as Entry[],
+        total: response.total
+      };
+    } catch (err) {
+      console.error("Error fetching filtered entries:", err);
+      setError("Failed to fetch filtered entries");
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const contextValue = {
     // State
     entries,
@@ -474,6 +526,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     // deleteEntry,
     getEntry,
     refreshEntries,
+    fetchFilteredEntries,
 
     // Payment functions
     createPayment,

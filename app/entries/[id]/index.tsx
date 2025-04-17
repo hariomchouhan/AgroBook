@@ -100,7 +100,11 @@ export default function EntryDetailsScreen() {
   return (
     <ScrollView style={styles.container}>
       {/* Header Section */}
-      <Header title="Entry Details" showAddButton={false} showBackButton={true} />
+      <Header
+        title="Entry Details"
+        showAddButton={false}
+        showBackButton={true}
+      />
 
       {/* Main Info Card */}
       <View style={styles.card}>
@@ -187,18 +191,20 @@ export default function EntryDetailsScreen() {
       <View style={styles.paymentsSection}>
         <View style={styles.paymentHeader}>
           <Text style={styles.paymentTitle}>Payment History</Text>
-          <TouchableOpacity
-            style={styles.addPaymentButton}
-            onPress={() =>
-              router.push({
-                pathname: "/entries/[id]/payments/new" as any,
-                params: { entryId: entry.$id },
-              })
-            }
-          >
-            <Ionicons name="add-circle-outline" size={24} color="#2196F3" />
-            <Text style={styles.addPaymentText}>Add Payment</Text>
-          </TouchableOpacity>
+          {entry.paymentStatus !== "full_paid" && (
+            <TouchableOpacity
+              style={styles.addPaymentButton}
+              onPress={() =>
+                router.push({
+                  pathname: "/payments/new" as any,
+                  params: { entryId: entry.$id },
+                })
+              }
+            >
+              <Ionicons name="add-circle-outline" size={24} color="#2196F3" />
+              <Text style={styles.addPaymentText}>Add Payment</Text>
+            </TouchableOpacity>
+          )}
         </View>
 
         {payments.length === 0 ? (
@@ -211,7 +217,13 @@ export default function EntryDetailsScreen() {
               key={payment.$id}
               style={styles.paymentCard}
               onPress={() => {
-                router.push(`/entries/${id}/payments/${payment.$id}`);
+                router.push({
+                  pathname: '/payments/[paymentId]',
+                  params: { 
+                    paymentId: payment.$id,
+                    entryId: entry.$id 
+                  }
+                });
               }}
             >
               <View style={styles.paymentInfo}>

@@ -7,7 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Header from '@/components/Header';
 
 export default function PaymentDetailsScreen() {
-  const { id, paymentId } = useLocalSearchParams();
+  const { paymentId, entryId: id } = useLocalSearchParams();
   const router = useRouter();
   const { getEntry, getPaymentsForEntry } = useContext(DataContext);
   const [entry, setEntry] = useState<Entry | null>(null);
@@ -90,8 +90,6 @@ export default function PaymentDetailsScreen() {
         <View style={styles.paymentHeader}>
           <Text style={styles.paymentAmount}>{formatCurrency(payment.amount)}</Text>
           <View style={styles.paymentDateContainer}>
-            <Ionicons name="calendar-outline" size={16} color="#757575" />
-            <Text style={styles.paymentDate}>{formatDate(payment.paymentDate)}</Text>
           </View>
         </View>
 

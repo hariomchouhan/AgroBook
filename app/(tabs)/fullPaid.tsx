@@ -1,35 +1,24 @@
-import React from "react";
-import { DataContext } from "@/contexts/DataContext";
-import { useRouter } from "expo-router";
-import { StyleSheet, View, Text, ScrollView, ActivityIndicator, RefreshControl, Platform } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import Header from "@/components/Header";
-import SegmentedControl from "@react-native-segmented-control/segmented-control";
-import { Entry } from "@/types";
-import { useContext, useState, useCallback, useEffect } from "react";
-import EntryCard from "@/components/ui/EntryCard";
-
-type PaymentStatus = 'all' | 'partially_paid' | 'not_paid';
+import { StyleSheet, View, Text, ScrollView, ActivityIndicator, RefreshControl } from 'react-native';
+import React, { useContext, useState, useCallback, useEffect } from 'react';
+import { DataContext } from '@/contexts/DataContext';
+import Header from '@/components/Header';
+import EntryCard from '@/components/ui/EntryCard';
+import { Entry } from '@/types';
 
 const ITEMS_PER_PAGE = Number(process.env.EXPO_PUBLIC_ITEMS_PER_PAGE) || 10;
 
-export default function HomeScreen() {
+export default function FullPaid() {
   const { loading, error, fetchFilteredEntries } = useContext(DataContext);
-  const [selectedFilter, setSelectedFilter] = useState<PaymentStatus>('all');
   const [page, setPage] = useState<number>(1);
   const [refreshing, setRefreshing] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [localEntries, setLocalEntries] = useState<Entry[]>([]);
-  
-  useEffect(() => {
-    loadEntries(1, true);
-  }, [selectedFilter]);
 
   const loadEntries = useCallback(async (pageNum: number, refresh: boolean = false) => {
     try {
       setLoadingMore(!refresh);
-      const result = await fetchFilteredEntries(selectedFilter, pageNum, ITEMS_PER_PAGE);
+      const result = await fetchFilteredEntries('full_paid', pageNum, ITEMS_PER_PAGE);
       
       if (refresh) {
         setLocalEntries(result.entries);
@@ -43,7 +32,7 @@ export default function HomeScreen() {
     } finally {
       setLoadingMore(false);
     }
-  }, [selectedFilter, fetchFilteredEntries]);
+  }, [fetchFilteredEntries]);
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
@@ -60,28 +49,13 @@ export default function HomeScreen() {
     }
   }, [loadingMore, hasMore, page, loadEntries]);
 
-  const handleFilterChange = async (event: { nativeEvent: { selectedSegmentIndex: number } }) => {
-    const filters: PaymentStatus[] = ['all', 'partially_paid', 'not_paid'];
-    const newFilter = filters[event.nativeEvent.selectedSegmentIndex];
-    setSelectedFilter(newFilter);
-    setPage(1);
-    setLocalEntries([]);
-    await loadEntries(1, true);
-  };
-  
+  useEffect(() => {
+    loadEntries(1, true);
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Header title="AgroBook" showAddButton={true} />
-      
-      <View style={styles.filterContainer}>
-        <SegmentedControl
-          values={['All', 'Partially Paid', 'Not Paid']}
-          selectedIndex={['all', 'partially_paid', 'not_paid'].indexOf(selectedFilter)}
-          onChange={handleFilterChange}
-          style={styles.segmentedControl}
-          appearance="light"
-        />
-      </View>
+      <Header title="Completed Entries" showAddButton={false} />
       
       <ScrollView 
         style={styles.content}
@@ -99,12 +73,9 @@ export default function HomeScreen() {
       >
         {localEntries.length === 0 && !loading ? (
           <View style={styles.emptyState}>
-            <Ionicons name="document-text-outline" size={48} color="#9E9E9E" />
-            <Text style={styles.emptyStateText}>No entries found</Text>
+            <Text style={styles.emptyStateText}>No completed entries found</Text>
             <Text style={styles.emptyStateSubtext}>
-              {selectedFilter === 'all' 
-                ? "Add your first entry to get started"
-                : `No ${selectedFilter.replace('_', ' ')} entries found`}
+              Completed entries will appear here
             </Text>
           </View>
         ) : (
@@ -127,12 +98,6 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  filterContainer: {
-    padding: 16,
-  },
-  segmentedControl: {
-    height: 40,
   },
   content: {
     flex: 1,
