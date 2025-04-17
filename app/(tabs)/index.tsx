@@ -31,6 +31,7 @@ export default function HomeScreen() {
             setSelectedFilter(filters[event.nativeEvent.selectedSegmentIndex]);
           }}
           style={styles.segmentedControl}
+          appearance="light"
         />
       </View>
       
@@ -99,6 +100,10 @@ const styles = StyleSheet.create({
   },
   segmentedControl: {
     height: 40,
+    borderRadius: 8,
+    backgroundColor: '#F8F9FA',
+    borderColor: '#E0E0E0',
+    borderWidth: 1,
   },
   content: {
     flex: 1,
