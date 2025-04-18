@@ -38,7 +38,8 @@ interface DataContextType {
   fetchFilteredEntries: (
     status: 'all' | 'full_paid' | 'partially_paid' | 'not_paid',
     page: number,
-    limit: number
+    limit: number,
+    searchQuery?: string
   ) => Promise<{ entries: Entry[]; total: number }>;
 
   // Payment functions
@@ -470,7 +471,8 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   const fetchFilteredEntries = async (
     status: 'all' | 'full_paid' | 'partially_paid' | 'not_paid',
     page: number,
-    limit: number
+    limit: number,
+    searchQuery?: string
   ): Promise<{ entries: Entry[]; total: number }> => {
     if (!user) throw new Error("User not authenticated");
 
@@ -483,6 +485,11 @@ export const DataProvider = ({ children }: DataProviderProps) => {
       } else {
         // Exclude full_paid entries when showing all
         queries.push(Query.notEqual("paymentStatus", "full_paid"));
+      }
+
+      // Add search query if provided
+      if (searchQuery && searchQuery.trim()) {
+        queries.push(Query.contains("personName", searchQuery.trim()));
       }
 
       const offset = (page - 1) * limit;
