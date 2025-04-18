@@ -57,9 +57,9 @@ function RootLayoutNav() {
               <Stack.Screen name="(auth)/login" options={{ title: 'Login' }} />
               <Stack.Screen name="(auth)/signup" options={{ title: 'Sign Up' }} />
               <Stack.Screen name="entries/new" options={{ title: 'New Entry' }} />
-              <Stack.Screen name="entries/[id]" options={{ title: 'Entry Details' }} />
-              <Stack.Screen name="entries/[id]/payments" options={{ title: 'Payments' }} />
-              <Stack.Screen name="entries/[id]/payments/new" options={{ title: 'Add Payment' }} />
+              <Stack.Screen name="entries/[id]/index" options={{ title: 'Entry Details' }} />
+              <Stack.Screen name="payments/new" options={{ title: 'Add Payment' }} />
+              <Stack.Screen name="payments/[paymentId]/index" options={{ title: 'Payment Details' }} />
               {/* Add more non-tab screen routes here */}
             </Stack>
           </ScreenWrapper>
