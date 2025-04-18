@@ -41,9 +41,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const checkAuth = async () => {
     try {
-      console.log('Checking authentication status...');
       const currentUser = await account.get();
-      console.log('User authenticated:', currentUser);
       setUser(currentUser);
       setIsAuthenticated(true);
     } catch (error) {

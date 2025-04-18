@@ -52,11 +52,6 @@ export default function HomeScreen() {
   const loadEntries = useCallback(
     async (pageNum: number, refresh: boolean = false) => {
       try {
-        console.log("Loading entries:", {
-          pageNum,
-          refresh,
-          filter: selectedFilter,
-        });
         setLoadingMore(!refresh);
 
         const result = await fetchFilteredEntries(
@@ -64,11 +59,6 @@ export default function HomeScreen() {
           pageNum,
           ITEMS_PER_PAGE
         );
-        console.log("Entries loaded:", {
-          count: result.entries.length,
-          total: result.total,
-          page: pageNum,
-        });
 
         if (refresh) {
           setLocalEntries(result.entries);

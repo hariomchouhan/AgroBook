@@ -46,15 +46,9 @@ export default function FullPaid() {
 
   const loadEntries = useCallback(async (pageNum: number, refresh: boolean = false) => {
     try {
-      console.log('Loading entries:', { pageNum, refresh, searchQuery: debouncedSearchQuery });
       setLoadingMore(!refresh);
       
       const result = await fetchFilteredEntries('full_paid', pageNum, ITEMS_PER_PAGE, debouncedSearchQuery);
-      console.log('Entries loaded:', { 
-        count: result.entries.length, 
-        total: result.total,
-        page: pageNum 
-      });
       
       if (refresh) {
         setLocalEntries(result.entries);
