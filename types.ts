@@ -68,6 +68,21 @@ export type BackButtonProps = {
   iconSize?: number;
 };
 
+
+// ----------------- Collections Types -----------------
+
+// Equipment Types
+export type EquipmentType = {
+  id?: string;
+  name: string;
+};
+
+// Crop Types
+export type CropType = {
+  id?: string;
+  name: string;
+};
+
 export type TransactionType = {
   id?: string;
   type: string;
