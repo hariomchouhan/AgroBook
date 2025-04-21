@@ -68,7 +68,6 @@ export type BackButtonProps = {
   iconSize?: number;
 };
 
-
 // ----------------- Collections Types -----------------
 
 // Equipment Types
@@ -83,40 +82,38 @@ export type CropType = {
   name: string;
 };
 
-export type TransactionType = {
+// Person Types
+export type PersonType = {
   id?: string;
-  type: string;
-  amount: number;
-  category?: string;
-  date: Date | Timestamp | string;
-  description?: string;
-  image?: any;
+  name: string;
   uid?: string;
-  walletId: string;
+  totalAmount: number;
+  remainingAmount: number;
+  paidAmount: number;
+  date: Date | Timestamp | string;
 };
 
-export type CategoryType = {
-  label: string;
-  value: string;
-  icon: Icon;
-  bgColor: string;
-};
-export type ExpenseCategoriesType = {
-  [key: string]: CategoryType;
-};
-
-export type TransactionListType = {
-  data: TransactionType[];
-  title?: string;
-  loading?: boolean;
-  emptyListMessage?: string;
+// Entry Types
+export type EntryType = {
+  id?: string;
+  equipmentId: string;
+  cropId: string;
+  quantity: number;
+  pricePerUnit: number;
+  notes?: string;
+  personId: string;
+  entryDate: Date | Timestamp | string;
 };
 
-export type TransactionItemProps = {
-  item: TransactionType;
-  index: number;
-  handleClick: Function;
+// Payment Types
+export type PaymentType = {
+  id?: string;
+  personId: string;
+  amount: number;
+  paymentDate: Date | Timestamp | string;
+  notes?: string;
 };
+
 
 export interface InputProps extends TextInputProps {
   icon?: React.ReactNode;
@@ -133,15 +130,6 @@ export interface CustomButtonProps extends TouchableOpacityProps {
   loading?: boolean;
   children: React.ReactNode;
 }
-
-export type ImageUploadProps = {
-  file?: any;
-  onSelect: (file: any) => void;
-  onClear: () => void;
-  containerStyle?: ViewStyle;
-  imageStyle?: ViewStyle;
-  placeholder?: string;
-};
 
 export type UserType = {
   uid?: string;
@@ -174,15 +162,4 @@ export type ResponseType = {
   success: boolean;
   data?: any;
   msg?: string;
-};
-
-export type WalletType = {
-  id?: string;
-  name: string;
-  amount?: number;
-  totalIncome?: number;
-  totalExpenses?: number;
-  image: any;
-  uid?: string;
-  created?: Date;
 };
