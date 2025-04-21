@@ -1,3 +1,4 @@
+import { colors } from '@/constants/theme';
 import { AuthProvider } from '@/contexts/authContext';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
@@ -29,9 +30,11 @@ export default function RootLayout() {
     <AuthProvider>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="(auth)/login" options={{ headerShown: false }} />
+        <Stack.Screen name="(auth)/register" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
-      <StatusBar style="auto" />
+      <StatusBar style="inverted" />
     </AuthProvider>
   );
 }

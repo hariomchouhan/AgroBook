@@ -65,7 +65,7 @@ const LoginScreen = (props: Props) => {
           </Typo> */}
 
           <Button loading={isLoading} onPress={handleSubmit}>
-            <Typo fontWeight={"700"} color={colors.black} size={21}>
+            <Typo fontWeight={"700"} color={colors.white} size={21}>
               Login
             </Typo>
           </Button>
@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 30,
     paddingHorizontal: 20,
+    paddingTop: 100,
   },
   welcomeText: {
     fontSize: 20,

@@ -27,4 +27,5 @@ const ScreenWrapper = ({ style, children }: ScreenWrapperProps) => {
 };
 
 export default ScreenWrapper;
+
 const styles = StyleSheet.create({});
