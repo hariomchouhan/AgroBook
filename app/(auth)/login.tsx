@@ -52,6 +52,7 @@ const LoginScreen = (props: Props) => {
             placeholder="Enter your email"
             onChange={(event) => (emailRef.current = event.nativeEvent.text)}
             icon={<At size={26} color={colors.neutral800} weight="fill" />}
+            autoCapitalize="none"
           />
           <Input
             placeholder="Enter your password"
