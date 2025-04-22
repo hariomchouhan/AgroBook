@@ -12,9 +12,7 @@ export const createPerson = async (
           return { success: false, msg: "Invalid person data!" };
         }
 
-        const personRef = uid  
-      ? doc(firestore, "persons", uid)
-      : doc(collection(firestore, "persons"));
+        const personRef = doc(collection(firestore, "persons"));
 
     await setDoc(personRef, personData, { merge: true });
 
