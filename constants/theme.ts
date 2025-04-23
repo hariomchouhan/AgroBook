@@ -22,7 +22,10 @@ export const colors = {
   text: "#212121", // Almost black for primary text
   textLight: "#757575", // Gray for secondary text
   textLighter: "#BDBDBD", // Light gray for tertiary text
-  
+
+  // Background colors
+  veryLightBlue: "#E0FFFF", // Very light blue background
+
   // Background colors
   background: "#F5F9FF", // Very light blue background
   surface: "#FFFFFF", // White surface

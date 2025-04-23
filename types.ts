@@ -98,11 +98,12 @@ export type EntryType = {
   id?: string;
   equipmentId: string;
   cropId: string;
-  quantity: number;
-  pricePerUnit: number;
+  quantity: number | string;
+  pricePerUnit: number | string;
   notes?: string;
   personId: string;
   entryDate: Date | Timestamp | string;
+  totalPrice?: number | string;
 };
 
 // Payment Types

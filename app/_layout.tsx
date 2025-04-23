@@ -39,6 +39,13 @@ export default function RootLayout() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="(modals)/addEntry"
+          options={{
+            presentation: "modal",
+            headerShown: false,
+          }}
+        />
 
         <Stack.Screen name="index" options={{ headerShown: false }} />
 
