@@ -22,7 +22,7 @@ export default ModalWrapper;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: Platform.OS === "ios" ? 15 : 20,
+    paddingTop: Platform.OS === "ios" ? 15 : 50,
     paddingBottom: Platform.OS === "ios" ? 20 : 10,
   },
 });

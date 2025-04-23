@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { useEffect } from "react";
-import { EquipmentType, CropType, PersonType } from "@/types";
+import { StyleSheet, View } from "react-native";
+import React from "react";
+import { PersonType } from "@/types";
 import { useAuth } from "@/contexts/authContext";
 import { useRouter } from "expo-router";
-import { orderBy, where } from "firebase/firestore";
+import { where } from "firebase/firestore";
 import ScreenWrapper from "@/components/ScreenWrapper";
 import useFetchData from "@/hooks/useFetchData";
 import Typo from "@/components/Typo";
@@ -12,12 +12,12 @@ import { colors } from "@/constants/theme";
 import PersonCard from "@/components/PersonCard";
 import { UserPlus } from "phosphor-react-native";
 import Loading from "@/components/Loading";
+
 type Props = {};
 
 const HomeScreen = (props: Props) => {
   const { user } = useAuth();
   const router = useRouter();
-  console.log(user);
 
   // Always call hooks at the top level, regardless of conditions
   const constraints = [where("uid", "==", user?.uid)];

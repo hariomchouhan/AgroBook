@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { HeaderProps } from "@/types";
 import Typo from "./Typo";
+import { colors } from "@/constants/theme";
 
 type Props = {};
 
@@ -30,6 +31,11 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     flexDirection: "row",
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+    paddingBottom: 10,
+    paddingTop: 10,
+    backgroundColor: colors.background,
   },
   leftIcon: {
     alignSelf: "flex-start",
