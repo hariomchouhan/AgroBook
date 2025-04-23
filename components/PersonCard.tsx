@@ -13,7 +13,18 @@ const PersonCard = ({ data, index }: Props) => {
   const router = useRouter();
   const { id, name, totalAmount, remainingAmount, paidAmount } = data;
 
-  const handlePress = () => {};
+  const handlePress = () => {
+    router.push({
+      pathname: "/(screens)/personDetails",
+      params: {
+        id,
+        name,
+        totalAmount,
+        remainingAmount,
+        paidAmount,
+      },
+    });
+  };
 
   return (
     <Animated.View
