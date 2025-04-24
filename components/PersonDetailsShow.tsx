@@ -2,13 +2,15 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import Typo from "./Typo";
 import { colors } from "@/constants/theme";
-import { useLocalSearchParams } from "expo-router";
+import { PersonType } from "@/types";
 
-type Props = {};
+type Props = {
+  person: PersonType;
+};
 
-const PersonDetailsShow = (props: Props) => {
-  const { name, totalAmount, remainingAmount, paidAmount } =
-    useLocalSearchParams();
+const PersonDetailsShow = ({ person }: Props) => {
+  const { name, totalAmount, remainingAmount, paidAmount } = person;
+  
   return (
     <View style={styles.personDetailsContainer}>
       <View style={styles.personDetailsNameContainer}>

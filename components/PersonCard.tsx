@@ -66,7 +66,7 @@ const PersonCard = ({ data, index }: Props) => {
           >
             {remainingAmount === 0 ? "Paid" : "Not Paid"}
           </Typo>
-          {remainingAmount === 0 && (
+          {remainingAmount !== 0 && (
             <Typo
               size={16}
               color={colors.neutral800}
